@@ -21,7 +21,7 @@ class ExchangeServiceTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testSuccessGetCurrencyByCode(Currency $currency, string $expectedResult): void
+    public function testSuccessGetCurrencyByCode(Currency $currency, array $expectedResult): void
     {
         $repository = Mockery::mock(CurrencyRepositoryInterface::class);
         $repository->shouldReceive('findByCode')->andReturn($currency);
@@ -48,22 +48,30 @@ class ExchangeServiceTest extends TestCase
     {
         yield [
             'currency' => new Currency('CHF', 'Швейцарский франк', 80.9855),
-            'expectedResult' => '1 Швейцарский франк равен 80.9855 рублям',
+            'expectedResult' => [
+                'CHF' => '1 Швейцарский франк равен 80.9855 рублям',
+            ],
         ];
 
         yield [
             'currency' => new Currency('AUD', 'Австралийский доллар', 51.0),
-            'expectedResult' => '1 Австралийский доллар равен 51 рублю',
+            'expectedResult' => [
+                'AUD' => '1 Австралийский доллар равен 51 рублю',
+            ],
         ];
 
         yield [
             'currency' => new Currency('PLN', 'Польский злотый', 0.0),
-            'expectedResult' => '1 Польский злотый равен 0 рублям',
+            'expectedResult' => [
+                'PLN' => '1 Польский злотый равен 0 рублям',
+            ],
         ];
 
         yield [
             'currency' => new Currency('RON', 'Румынский лей', 100.0),
-            'expectedResult' => '1 Румынский лей равен 100 рублям',
+            'expectedResult' => [
+                'RON' => '1 Румынский лей равен 100 рублям',
+            ],
         ];
     }
 }
