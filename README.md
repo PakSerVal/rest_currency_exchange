@@ -1,8 +1,6 @@
 # Currency exchange rest service
 
 ## Up and running
-Clone the repo:
-
 ```bash
 git clone https://github.com/PakSerVal/rest_currency_exchange.git
 cd rest_currency_exchange
