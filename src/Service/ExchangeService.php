@@ -13,10 +13,10 @@ class ExchangeService
     private CurrencyResultFormatter $currencyResultFormatter;
 
     public function __construct(
-        CurrencyRepositoryInterface $apiRatesRepository,
+        CurrencyRepositoryInterface $currencyRepository,
         CurrencyResultFormatter $currencyResultFormatter
     ) {
-        $this->currencyRepository = $apiRatesRepository;
+        $this->currencyRepository = $currencyRepository;
         $this->currencyResultFormatter = $currencyResultFormatter;
     }
 

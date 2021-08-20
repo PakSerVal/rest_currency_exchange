@@ -25,6 +25,10 @@ services:
         resource: '../src/Controller/'
         tags: [ 'controller.service_arguments' ]
 
+    App\Listener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
     rates_guzzle_client:
         class: GuzzleHttp\Client
         arguments:

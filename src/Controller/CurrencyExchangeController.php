@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Service\ExchangeService;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Throwable;
 
-class CurrencyExchangeController implements ApiKeyAuthenticatedController
+class CurrencyExchangeController extends AbstractFOSRestController implements ApiKeyAuthenticatedController
 {
     private ExchangeService $exchangeService;
 
@@ -27,12 +27,13 @@ class CurrencyExchangeController implements ApiKeyAuthenticatedController
     public function exchangeCurrency(string $currencyCode): Response
     {
         try {
-            $currency = $this->exchangeService->getCurrencyByCode($currencyCode);
+            $view = View::create()
+                ->setData($this->exchangeService->getCurrencyByCode($currencyCode));
         } catch (Throwable $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
 
-        return new JsonResponse($currency);
+        return $this->getViewHandler()->handle($view);
     }
 
     /**
@@ -41,11 +42,12 @@ class CurrencyExchangeController implements ApiKeyAuthenticatedController
     public function exchange(): Response
     {
         try {
-            $currency = $this->exchangeService->getRandomCurrency();
+            $view = View::create()
+                ->setData($this->exchangeService->getRandomCurrency());
         } catch (Throwable $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
 
-        return new JsonResponse($currency);
+        return $this->getViewHandler()->handle($view);
     }
 }
