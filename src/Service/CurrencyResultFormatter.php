@@ -30,7 +30,7 @@ class CurrencyResultFormatter
         $postfix = 'рублям';
         $hasFraction = $value - floor($value);
 
-        if (!$hasFraction && ($value % 1000 !== 11) && (int)$value % 10 === 1) {
+        if (!$hasFraction && ($value % 100 !== 11) && (int)$value % 10 === 1) {
             $postfix = 'рублю';
         }
 
